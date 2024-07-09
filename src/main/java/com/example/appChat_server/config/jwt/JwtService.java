@@ -39,6 +39,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    //
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
     // check token is expired
     public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
